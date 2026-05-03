@@ -1,0 +1,14 @@
+image: ghcr.io/cirruslabs/flutter:stable
+
+stages:
+  - check
+
+flutter_check:
+  stage: check
+  script:
+    - flutter --version
+    - flutter pub get
+    - flutter analyze
+    - flutter test
+  only:
+    - merge_requests
