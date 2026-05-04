@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: "ar"
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+      - dev
+
+  path_filters:
+    - "!build/**"
+    - "!.dart_tool/**"
+    - "!ios/Pods/**"
+    - "!android/.gradle/**"
+    - "!**/*.g.dart"
+    - "!**/*.freezed.dart"
+    - "!**/*.mocks.dart"
+    - "lib/**"
+    - "test/**"
+    - "pubspec.yaml"
+
+  path_instructions:
+    - path: "lib/**"
+      instructions: |
+        راجع هذا المشروع كأنه مشروع Flutter/Dart لمطور مبتدئ يتعلم البرمجة.
+
+        المطلوب:
+        - اكتب التعليقات باللغة العربية.
+        - كن نقديًا جدًا ودقيقًا ومفصلًا.
+        - لا تتجاهل الأخطاء حتى لو كانت بسيطة.
+        - لا تتجاهل الأخطاء المهمة.
+        - ركّز على الأخطاء الحقيقية قبل تحسينات الأسلوب.
+        - اشرح سبب المشكلة بطريقة سهلة وبسيطة، لأن المطور ما زال مبتدئًا.
+        - لا تكتفِ بقول "هذا خطأ"، بل وضّح ما الذي سيحدث في التطبيق بسبب الخطأ.
+        - أعطِ أمثلة Dart صغيرة عند اقتراح تعديل.
+        - اقترح حلولًا عملية صغيرة بدل إعادة بناء معمارية كاملة.
+        - إذا كان الكود يعمل لكنه ضعيف، قل ذلك بوضوح وبيّن التحسين.
+
+        ركّز على:
+        - مشاكل Null Safety.
+        - سوء استخدام async/await و Future.
+        - أخطاء setState و BuildContext.
+        - وجود Controller أو Stream أو FocusNode بدون dispose().
+        - مشاكل navigation.
+        - forms و validation.
+        - API calls.
+        - error handling.
+        - تكرار الكود.
+        - أسماء المتغيرات غير الواضحة.
+        - الملفات أو widgets الكبيرة جدًا.
+        - تحسينات الأسلوب، خصوصًا عندما تؤثر على القراءة، الفهم، أو قابلية الصيانة.
+
+        أسلوب المراجعة:
+        - باللغة العربية.
+        - مباشر.
+        - تعليمي.
+        - مفصل.
+        - صارم تقنيًا.
+        - نقدي جدًا.
+        - غير قاسٍ شخصيًا.
+        - بدون إهانة شخصية.
+        - لا تستخدم مصطلحات معقدة بدون شرح قصير.
+
+    - path: "test/**"
+      instructions: |
+        راجع الاختبارات باللغة العربية.
+        كن نقديًا ومفصلًا بخصوص الحالات غير المختبرة.
+        وضّح للمطور المبتدئ ما الذي يجب اختباره ولماذا.
+        اقترح اختبارات بسيطة ومناسبة لمطور مبتدئ.
+
+chat:
+  auto_reply: true
