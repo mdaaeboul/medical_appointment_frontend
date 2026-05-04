@@ -23,9 +23,6 @@ reviews:
     - "!**/*.g.dart"
     - "!**/*.freezed.dart"
     - "!**/*.mocks.dart"
-    - "lib/**"
-    - "test/**"
-    - "pubspec.yaml"
 
   path_instructions:
     - path: "lib/**"
