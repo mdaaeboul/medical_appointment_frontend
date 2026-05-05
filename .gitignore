@@ -51,3 +51,6 @@ app.*.map.json
 *.jks
 android/key.properties
 android/local.properties
+# Local AI assistant rules and prompts
+docs/AI_RULES.md
+prompts/task_template.md
