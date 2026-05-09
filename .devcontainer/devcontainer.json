@@ -12,6 +12,7 @@
   },
 
   "forwardPorts": [3000],
+
   "portsAttributes": {
     "3000": {
       "label": "Flutter Web",
@@ -20,7 +21,8 @@
   },
 
   "postCreateCommand": "flutter pub get",
-  "postAttachCommand": "flutter run -d web-server --web-hostname=0.0.0.0 --web-port=3000",
+
+  "postAttachCommand": "pgrep -f 'flutter run -d web-server' >/dev/null || flutter run -d web-server --web-hostname=0.0.0.0 --web-port=3000",
 
   "remoteUser": "root"
 }
