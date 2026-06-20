@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
     super.key,
+    required this.onRequestOtp,
   });
+
+  /// Called when the user submits the form.
+  ///
+  /// Receives the trimmed phone number entered by the user.
+  /// Wire this to [RequestOtpUseCase] at the composition root.
+  final Future<void> Function(String phoneNumber) onRequestOtp;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -24,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void onRequestOtp() {
+  Future<void> _handleRequestOtp() async {
     final bool isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
       return;
     }
 
-    // TODO: Connect backend OTP request when the API contract is available.
+    await widget.onRequestOtp(_phoneController.text.trim());
   }
 
   @override
@@ -68,11 +75,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    onFieldSubmitted: (_) => onRequestOtp(),
+                    onFieldSubmitted: (_) => _handleRequestOtp(),
                   ),
                   const SizedBox(height: _contentSpacing),
                   FilledButton(
-                    onPressed: onRequestOtp,
+                    onPressed: _handleRequestOtp,
                     child: Text(_text('auth.login.requestOtp')),
                   ),
                 ],
@@ -84,6 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // TODO(l10n): Replace with generated AppLocalizations once gen-l10n / .arb
+  // files are set up. See https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
   String _text(String localizationKey) {
     return localizationKey;
   }
