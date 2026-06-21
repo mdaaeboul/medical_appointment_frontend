@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({
-    super.key,
-    required this.onRequestOtp,
-  });
+  const LoginScreen({super.key, required this.onRequestOtp});
 
   /// Called when the user submits the form.
   ///
@@ -21,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   static const double _contentSpacing = 16;
   static const double _fieldRadius = 12;
   static const int _minPhoneLength = 7;
+  static final RegExp _digitsOnlyPattern = RegExp(r'^[0-9]+$');
 
   final TextEditingController _phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -44,9 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_text('auth.login.title')),
-      ),
+      appBar: AppBar(title: Text(_text('auth.login.title'))),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -65,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: _validatePhone,
                     decoration: InputDecoration(
                       labelText: _text('auth.login.phone.label'),
@@ -98,10 +96,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String? _validatePhone(String? value) {
-    final String phone = value?.trim() ?? '';
+    final String phone = value ?? '';
 
-    if (phone.isEmpty) {
+    if (phone.trim().isEmpty) {
       return _text('auth.login.phone.validation.required');
+    }
+
+    if (!_digitsOnlyPattern.hasMatch(phone)) {
+      return _text('auth.login.phone.validation.invalid');
     }
 
     if (phone.length < _minPhoneLength) {
